@@ -1,3 +1,5 @@
 # Vagrant stuff
 .vagrant/
 *.log
+
+zabbix-docker/

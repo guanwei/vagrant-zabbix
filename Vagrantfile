@@ -15,6 +15,7 @@ Vagrant.configure("2") do |config|
   
   config.vm.box = "ubuntu/xenial64"
   config.vm.box_check_update = false
+  config.vbguest.auto_update = false
   
   config.timezone.value = :host
   
@@ -44,11 +45,12 @@ Vagrant.configure("2") do |config|
       v.memory = "1024"
     end
 
-    node.vm.synced_folder ".", "/vagrant", mount_options: ["dmode=775,fmode=600"]
-
     node.vm.provision "shell", inline: <<-SHELL
-      git clone -b 3.4 --single-branch https://github.com/zabbix/zabbix-docker.git
+      git -C /opt/zabbix-docker pull || git clone -b 3.4 --single-branch \
+        https://github.com/zabbix/zabbix-docker.git /opt/zabbix-docker
     SHELL
+
+    #node.vm.synced_folder "zabbix-docker", "/vagrant/zabbix-docker", mount_options: ["uid=root"]
 
     node.vm.provision "docker" do |d|
       d.post_install_provision "shell", path: "scripts/set-docker-mirror.sh"
@@ -58,7 +60,8 @@ Vagrant.configure("2") do |config|
   
     node.vm.provision "docker_compose",
       compose_version: "1.16.1",
-      yml: "~/zabbix-docker/docker-compose_v2_ubuntu_mysql_latest.yaml",
+      yml: "/vagrant/zabbix-docker/docker-compose_v2_ubuntu_mysql_latest.yaml",
+      rebuild: true,
       run: "always"
   
     node.vm.provision "shell", path: "scripts/bootstrap.sh"
