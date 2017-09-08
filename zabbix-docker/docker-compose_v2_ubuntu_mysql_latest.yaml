@@ -43,46 +43,6 @@ services:
    com.zabbix.dbtype: "mysql"
    com.zabbix.os: "ubuntu"
 
- zabbix-proxy-sqlite3:
-  image: zabbix/zabbix-proxy-sqlite3:ubuntu-3.4-latest
-  ports:
-   - "10061:10051"
-  volumes:
-   - /etc/localtime:/etc/localtime:ro
-   - /etc/timezone:/etc/timezone:ro 
-   - ./zbx_env/usr/lib/zabbix/externalscripts:/usr/lib/zabbix/externalscripts:ro
-   - ./zbx_env/var/lib/zabbix/modules:/var/lib/zabbix/modules:ro
-   - ./zbx_env/var/lib/zabbix/enc:/var/lib/zabbix/enc:ro
-   - ./zbx_env/var/lib/zabbix/ssh_keys:/var/lib/zabbix/ssh_keys:ro
-   - ./zbx_env/var/lib/zabbix/mibs:/var/lib/zabbix/mibs:ro
-  volumes_from:
-   - zabbix-snmptraps:ro
-  links:
-   - zabbix-server:zabbix-server
-   - zabbix-java-gateway:zabbix-java-gateway
-  ulimits:
-   nproc: 65535
-   nofile:
-    soft: 20000
-    hard: 40000
-   mem_limit: 512m
-  env_file:
-   - .env_prx
-   - .env_prx_sqlite3
-  user: root
-  networks:
-   zbx_net:
-    aliases:
-     - zabbix-proxy-sqlite3
-     - zabbix-proxy-ubuntu-sqlite3
-     - zabbix-proxy-sqlite3-ubuntu
-  labels:
-   com.zabbix.description: "Zabbix proxy with SQLite3 database support"
-   com.zabbix.company: "Zabbix SIA"
-   com.zabbix.component: "zabbix-proxy"
-   com.zabbix.dbtype: "sqlite3"
-   com.zabbix.os: "ubuntu"
-
  zabbix-proxy-mysql:
   image: zabbix/zabbix-proxy-mysql:ubuntu-3.4-latest
   ports:
