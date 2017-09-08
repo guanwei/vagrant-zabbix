@@ -10,7 +10,7 @@
 
 可以运行 `win-env-installer.bat` 快速安装，必须以管理员身份运行
 
-之后运行以下命令安装Zabbix Docker
+之后运行以下命令安装zabbix-docker虚拟机
 ```
 vagrant up
 ```
