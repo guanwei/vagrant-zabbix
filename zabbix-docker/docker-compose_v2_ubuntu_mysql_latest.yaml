@@ -6,7 +6,7 @@ services:
    - "10051:10051"
   volumes:
    - /etc/localtime:/etc/localtime:ro
-   - /etc/timezone:/etc/timezone:ro 
+   - /etc/timezone:/etc/timezone:ro
    - ./zbx_env/usr/lib/zabbix/alertscripts:/usr/lib/zabbix/alertscripts:ro
    - ./zbx_env/usr/lib/zabbix/externalscripts:/usr/lib/zabbix/externalscripts:ro
    - ./zbx_env/var/lib/zabbix/modules:/var/lib/zabbix/modules:ro
