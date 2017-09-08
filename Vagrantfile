@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  required_plugins = %w(vagrant-timezone vagrant-hostmanager vagrant-proxyconf vagrant-docker-compose)
+  required_plugins = %w(vagrant-timezone vagrant-proxyconf vagrant-docker-compose)
   plugins_to_install = required_plugins.select { |plugin| not Vagrant.has_plugin? plugin }
   if not plugins_to_install.empty?
     puts "Installing plugins: #{plugins_to_install.join(' ')}"
@@ -18,10 +18,6 @@ Vagrant.configure("2") do |config|
   config.vbguest.auto_update = false
   
   config.timezone.value = :host
-  
-  config.hostmanager.enabled = true
-  config.hostmanager.manage_host = false
-  config.hostmanager.manage_guest = true
   
   if ENV["http_proxy"]
     puts "http_proxy: " + ENV["http_proxy"]
