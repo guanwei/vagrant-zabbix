@@ -1,5 +1,3 @@
-# zabbix-study
-
 使用vagrant启动一个virtual box虚拟机，并在其中运行zabbix docker容器
 
 如果网络环境需要走代理的话，需要添加环境变量 `http_proxy`，`https_proxy` 和 `no_proxy`
