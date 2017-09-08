@@ -36,26 +36,21 @@ Vagrant.configure("2") do |config|
     config.proxy.no_proxy = ENV["no_proxy"]
   end
   
-  config.vm.define "zabbix" do |node|
-    node.vm.hostname = "zabbix"
+  config.vm.define "zabbix-docker" do |node|
+    node.vm.hostname = "zabbix-docker"
     node.vm.network "private_network", ip: "10.10.10.10"
     node.vm.provider "virtualbox" do |v|
-      v.name = "zabbix"
+      v.name = "zabbix-docker"
       v.cpus = "1"
       v.memory = "1024"
     end
 
-    node.vm.provision "shell", inline: <<-SHELL
-      git -C /opt/zabbix-docker pull || git clone -b 3.4 --single-branch \
-        https://github.com/zabbix/zabbix-docker.git /opt/zabbix-docker
-    SHELL
-
-    #node.vm.synced_folder "zabbix-docker", "/vagrant/zabbix-docker", mount_options: ["uid=root"]
+    #node.vm.synced_folder "zabbix-docker", "/vagrant/zabbix-docker", mount_options: ["uid=999"]
 
     node.vm.provision "docker" do |d|
       d.post_install_provision "shell", path: "scripts/set-docker-mirror.sh"
     end
-  
+
     node.vm.provision "shell", path: "scripts/install-docker-compose.sh"
   
     node.vm.provision "docker_compose",

@@ -2,4 +2,5 @@
 .vagrant/
 *.log
 
-zabbix-docker/
+# zabbix-docker stuff
+zabbix-docker/zbx_env/
