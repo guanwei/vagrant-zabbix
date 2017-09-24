@@ -41,7 +41,7 @@ Vagrant.configure("2") do |config|
       v.memory = "1024"
     end
 
-    #node.vm.synced_folder "zabbix-docker", "/vagrant/zabbix-docker", mount_options: ["uid=999"]
+    node.vm.synced_folder "zabbix-docker", "/vagrant/zabbix-docker", mount_options: ["uid=999"]
 
     node.vm.provision "docker" do |d|
       d.post_install_provision "shell", path: "scripts/set-docker-mirror.sh"
@@ -52,7 +52,7 @@ Vagrant.configure("2") do |config|
     node.vm.provision "docker_compose",
       compose_version: "1.16.1",
       yml: "/vagrant/zabbix-docker/docker-compose_v2_ubuntu_mysql_latest.yaml",
-      rebuild: true,
+      rebuild: false,
       run: "always"
   
     node.vm.provision "shell", path: "scripts/bootstrap.sh"
